@@ -2,6 +2,7 @@ using Bookshop_ASP.NET_Core_MVC_Application.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
+using Bookshop.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +20,8 @@ builder.Services.AddControllersWithViews();
 //DefaultConnectionString
 
 
-
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -40,5 +41,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+BookshopDbContextSeeder.Seed(app);
 
 app.Run();
