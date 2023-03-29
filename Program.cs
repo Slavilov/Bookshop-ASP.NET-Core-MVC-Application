@@ -1,11 +1,23 @@
 using Bookshop_ASP.NET_Core_MVC_Application.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//var confBuilder = new ConfigurationBuilder();
+//confBuilder.AddJsonFile("appsettings.json");
+//var configuration = confBuilder.Build();
+//
+//IConfiguration confString = confBuilder.Build();
+
+
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+//builder.Services.AddDbContext<BookshopDbContext>(options => options.UseSqlServer());
 builder.Services.AddDbContext<BookshopDbContext>();
+builder.Services.AddControllersWithViews();
+//DefaultConnectionString
+
 
 
 var app = builder.Build();
