@@ -39,11 +39,11 @@ namespace Bookshop.Data
                 // Create some authors
                 var authors = new List<Author>
             {
-                new Author { FirstName = "Stephen", LastName = "King", Nationality = "American", Description = "Best-selling author known for his horror and suspense novels", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4c/Stephen_King%2C_Comicon.jpg" },
-                new Author { FirstName = "J.K.", LastName = "Rowling", Nationality = "British", Description = "Best-selling author of the Harry Potter series", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/d/df/J._K._Rowling_2010.jpg" },
-                new Author { FirstName = "Dan", LastName = "Brown", Nationality = "American", Description = "Best-selling author of The Da Vinci Code and other thriller novels", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/2/2f/Dan_Brown_2017-1.jpg" },
-                new Author { FirstName = "Margaret", LastName = "Atwood", Nationality = "Canadian", Description = "Best-selling author of The Handmaid's Tale and other novels", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/6/68/Margaret_Atwood_in_2015.jpg" },
-                new Author { FirstName = "Jane", LastName = "Austen", Nationality = "British", Description = "Classic author of novels such as Pride and Prejudice and Sense and Sensibility", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/1/16/CassandraAusten-JaneAusten%28c.1810%29_hires.jpg" }
+                new Author { FirstName = "Stephen", LastName = "King", Nationality = "American", Description = "Best-selling author known for his horror and suspense novels", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/e/e3/Stephen_King%2C_Comicon.jpg" },
+                new Author { FirstName = "J.K.", LastName = "Rowling", Nationality = "British", Description = "Best-selling author of the Harry Potter series", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/5/5d/J._K._Rowling_2010.jpg" },
+                new Author { FirstName = "Dan", LastName = "Brown", Nationality = "American", Description = "Best-selling author of The Da Vinci Code and other thriller novels", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/8/8b/Dan_Brown_bookjacket_cropped.jpg" },
+                new Author { FirstName = "Margaret", LastName = "Atwood", Nationality = "Canadian", Description = "Best-selling author of The Handmaid's Tale and other novels", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/f/f4/Margaret_Atwood_in_2015-2.jpg" },
+                new Author { FirstName = "Jane", LastName = "Austen", Nationality = "British", Description = "Classic author of novels such as Pride and Prejudice and Sense and Sensibility", ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/c/cb/Jane_Austen%2C_from_A_Memoir_of_Jane_Austen_%281870%29.jpg" }
             };
                 context.Authors.AddRange(authors);
 
@@ -51,10 +51,10 @@ namespace Bookshop.Data
                 var books = new List<Book>
             {
                 new Book { Title = "The Shining", PublicationDate = new DateTime(1977, 1, 28), Description = "A novel about a haunted hotel in Colorado", Price = 15.99m, ImageUrl = "https://upload.wikimedia.org/wikipedia/en/4/4c/Shiningnovel.jpg", Author = authors[0] },
-                new Book { Title = "Harry Potter and the Philosopher's Stone", PublicationDate = new DateTime(1997, 6, 26), Description = "The first book in the Harry Potter series", Price = 9.99m, ImageUrl = "Blabla", Author = authors[1] },
+                new Book { Title = "Harry Potter and the Philosopher's Stone", PublicationDate = new DateTime(1997, 6, 26), Description = "The first book in the Harry Potter series", Price = 9.99m, ImageUrl = "https://upload.wikimedia.org/wikipedia/en/7/7a/Harry_Potter_and_the_Philosopher%27s_Stone_banner.jpg", Author = authors[1] },
                 new Book { Title = "The Da Vinci Code", PublicationDate = new DateTime(2003, 3, 18), Description = "A thriller novel about a symbologist who is drawn into a conspiracy involving the Catholic Church", Price = 12.99m, ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/DaVinciCode.jpg", Author = authors[2] },
-                new Book { Title = "The Handmaid's Tale", PublicationDate = new DateTime(1985, 8, 12), Description = "A dystopian novel set in a future United States where women are oppressed and used for reproductive purposes", Price = 14.99m, ImageUrl = "https://upload.wikimedia.org/wikipedia/en/7/70/The_Handmaid%27s_Tale_%28original_cover%29.jpg", Author = authors[3] },
-                new Book { Title = "Pride and Prejudice", PublicationDate = new DateTime(1813, 1, 28), Description = "A classic novel about the relationship between Elizabeth Bennet and Mr. Darcy", Price = 7.99m, ImageUrl = "https://upload.wikimedia.org/wikipedia/commons/5/50/Pride_and_Prejudice_-_Title_Page_of_1813_Edition.jpg", Author = authors[4] }
+                new Book { Title = "The Handmaid's Tale", PublicationDate = new DateTime(1985, 8, 12), Description = "A dystopian novel set in a future United States where women are oppressed and used for reproductive purposes", Price = 14.99m, ImageUrl = "https://upload.wikimedia.org/wikipedia/en/1/18/TheHandmaidsTale%281stEd%29.jpg", Author = authors[3] },
+                new Book { Title = "Pride and Prejudice", PublicationDate = new DateTime(1813, 1, 28), Description = "A classic novel about the relationship between Elizabeth Bennet and Mr. Darcy", Price = 7.99m, ImageUrl = "https://upload.wikimedia.org/wikipedia/en/0/09/Brock_Pride_and_Prejudice.jpg", Author = authors[4] }
         };
                 context.Books.AddRange(books);
 

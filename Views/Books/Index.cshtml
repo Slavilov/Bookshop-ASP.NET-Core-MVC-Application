@@ -1,10 +1,38 @@
-﻿
+﻿@model IEnumerable<Book>
 @{
     ViewData["Title"] = "View";
 
 }
-
-<h1>Books:</h1>
 <a asp-controller="Books" asp-action="Create" class="btn btn-primary">Add a Book!</a>
+
+<h1>Available Books:</h1>
+<div class="row">
+    @foreach (var book in Model)
+    {
+        <div class="col-md-4 col-lg-3 mb-4">
+            <div class="card h-100">
+                <img src="@book.ImageUrl" alt="@book.Title" class="card-img-top book-card-img" style="max-height: 200px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@book.Title</h5>
+                    <p class="card-text">@book.Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Price: @book.Price.ToString("C")</li>
+                    <li class="list-group-item">Publication Date: @book.PublicationDate.ToString("MMMM dd, yyyy")</li>
+                    <li class="list-group-item">Author: @book.Author.FirstName @book.Author.LastName</li>
+                    <li class="list-group-item">
+                        Genres:
+                        <ul>
+                            @foreach (var bookGenre in book.BookGenres)
+                            {
+                                <li>@bookGenre.Genre.Name</li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+</div>
 
 

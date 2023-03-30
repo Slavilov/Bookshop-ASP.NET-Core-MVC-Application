@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.book-card-img {
+    transition: transform 0.3s;
+}
+
+    .book-card-img:hover {
+        transform: scale(1.1);
+    }
