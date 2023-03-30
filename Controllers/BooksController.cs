@@ -1,14 +1,30 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Bookshop_ASP.NET_Core_MVC_Application.Data;
 
 namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
 {
     public class BooksController : Controller
     {
-        // GET: BooksController
-        public ActionResult Index()
+        private readonly BookshopDbContext _context;
+
+        public BooksController(BookshopDbContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        // GET: BooksController
+        public async Task<IActionResult> Index()
+        {
+            var books = await _context.Books
+                .Include(b => b.Author)
+                .Include(b => b.BookGenres)
+                    .ThenInclude(bg => bg.Genre)
+                .ToListAsync();
+
+            return View(books);
         }
 
         // GET: BooksController/Details/5
