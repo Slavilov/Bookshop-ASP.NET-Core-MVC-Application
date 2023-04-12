@@ -11,16 +11,20 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Data
 
         private readonly IConfiguration _configuration;
 
-        [InjectionConstructor]
-        public BookshopDbContext(IConfiguration configuration)
+        public BookshopDbContext() : base()
         {
-            _configuration = configuration;
         }
 
         //public BookshopDbContext(DbContextOptions<BookshopDbContext> options) : base(options)
         //{
         //
         //}
+
+        [InjectionConstructor]
+        public BookshopDbContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
@@ -31,6 +35,13 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Data
         // Add a DbSet Rating and Model Rating (min rating 1 - max rating 5)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Book>()
+                .Property(b => b.Price)
+                .HasColumnType("decimal(18,2)");
+
+            //modelBuilder.Entity<Book>()
+            //    .Ignore(b => b.Author);
+
             modelBuilder.Entity<BookGenre>()
                 .HasKey(bg => new { bg.BookId, bg.GenreId });
 

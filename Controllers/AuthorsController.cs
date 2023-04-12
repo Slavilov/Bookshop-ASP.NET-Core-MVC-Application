@@ -1,4 +1,5 @@
 ﻿using Bookshop_ASP.NET_Core_MVC_Application.Data;
+using Bookshop_ASP.NET_Core_MVC_Application.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,25 +28,41 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View();
         }
 
-        // GET: AuthorsController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
-        // POST: AuthorsController/Create
+        ////To check if that's how to save and add data, this was given to me from chat gpt
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(Author author)
         {
-            try
+            // Validate the data entered by the user
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                // Check if the author already exists in the database
+                var existingAuthor = _context.Authors.FirstOrDefault(a => a.FirstName == author.FirstName && a.LastName == author.LastName);
+        
+                if (existingAuthor == null)
+                {
+                    // Author does not exist in the database, add it
+                    _context.Authors.Add(author);
+                    _context.SaveChanges();
+
+                    // Redirect to the Index view of AuthorsController
+                    // Da napravq novo View v koeto shte izpisva Succesfully Added new Author!
+                    return View("AuthorCreated");
+                }
+                else
+                {
+                    // Author already exists in the database, show an error message
+                    return View("AuthorExists");
+                }
             }
-            catch
-            {
-                return View();
-            }
+        
+            // If the ModelState is not valid or there is an error, return to the Create view with the entered data
+            return View(author);
         }
 
         // GET: AuthorsController/Edit/5

@@ -1,22 +1,33 @@
-﻿
+﻿@model Author
+@using Bookshop_ASP.NET_Core_MVC_Application.Models
+@using Bookshop_ASP.NET_Core_MVC_Application.Data
+@inject BookshopDbContext DbContext
+@using Microsoft.AspNetCore.Mvc.Rendering
 @{
     ViewData["Title"] = "Create";
 }
 
-<form method="post">
-    <div class="form-group">
-        <label for="NameOfBook">Name:</label>
-        <input type="text" class="form-control" id="NameOfBook" name="NameOfBook">
+<form asp-action="Create" asp-controller="Authors" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="FirstName">First Name:</label>
+        <input type="text" name="FirstName" id="FirstName" required />
     </div>
-    <div class="form-group">
+    <div>
+        <label for="LastName">Last Name:</label>
+        <input type="text" name="LastName" id="LastName" required />
+    </div>
+    <div>
         <label for="Description">Description:</label>
-        <input type="text" class="form-control" id="Description" name="Description">
+        <textarea name="Description" id="Description"></textarea>
     </div>
-    <div class="form-group">
-        <label for="image">ImageURL:</label>
-        <input type="text" class="form-control" id="image" name="image">
+    <div>
+        <label for="Nationality">Nationality:</label>
+        <input type="text" name="Nationality" id="Nationality" required />
     </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div>
+        <label for="ImageUrl">Image URL:</label>
+        <input type="url" name="ImageUrl" id="ImageUrl" />
+    </div>
+    <!-- Add other form fields as needed -->
+    <button type="submit">Save</button>
 </form>
-
