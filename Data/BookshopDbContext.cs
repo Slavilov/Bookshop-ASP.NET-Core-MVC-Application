@@ -57,9 +57,8 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Data
             modelBuilder.Entity<AuthorGenre>()
                 .HasOne(ag => ag.Genre)
                 .WithMany(g => g.AuthorGenres)
-                .HasForeignKey(bg => bg.GenreId);
+                .HasForeignKey(ag => ag.GenreId);
 
-            //I don't know if i wrote the Fluent API right or wrong!
 
             modelBuilder.Entity<Book>()
            .Property(b => b.Price)
