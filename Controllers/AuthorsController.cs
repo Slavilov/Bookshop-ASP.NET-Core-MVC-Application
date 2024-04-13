@@ -1,4 +1,5 @@
 ﻿using Bookshop_ASP.NET_Core_MVC_Application.Data;
+using Bookshop_ASP.NET_Core_MVC_Application.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +28,9 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View();
         }
 
-        // GET: AuthorsController/Create
-        public ActionResult Create()
+
+        [HttpGet]
+        public IActionResult Create()
         {
             return View();
         }
@@ -36,16 +38,15 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
         // POST: AuthorsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create([Bind("FirstName, LastName, Description, Nationality, ImageUrl")] Author author)
         {
-            try
+            if (ModelState.IsValid)
             {
+                _context.Add(author);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(author);
         }
 
         // GET: AuthorsController/Edit/5
