@@ -6,7 +6,8 @@
           refacture your code!*/
         // To add many to many relationship between Books and Genres!
         //Add Async to the names of async methods?
-        //To fix adding Books!
+        //To fix adding Authors and Books!
+        //To add functionality to Controlers methods Edit, Details and Delete
 
     }
 }
