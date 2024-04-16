@@ -1,35 +1,52 @@
-﻿
+﻿@model Bookshop_ASP.NET_Core_MVC_Application.Models.Book
 @{
     ViewData["Title"] = "AddBook";
 }
 
 <form method="post">
+    @Html.AntiForgeryToken()
     <div class="form-group">
-        <label for="NameOfBook">Name:</label>
-        <input type="text" class="form-control" id="NameOfBook" name="NameOfBook">
+        <label for="Title">Title:</label>
+        <input type="text" class="form-control" id="Title" name="Title">
     </div>
     <div class="form-group">
-        <label for="PriceOfBook">Price:</label>
-        <input type="text" class="form-control" id="PriceOfBook" name="PriceOfBook">
+        <label for="Price">Price:</label>
+        <input type="number" class="form-control" id="Price" name="Price" step="0.01">
+    </div>
+    <div class="form-group">
+        <label for="PublicationDate">Publication Date:</label>
+        <input type="date" class="form-control" id="PublicationDate" name="PublicationDate">
     </div>
     <div class="form-group">
         <label for="Description">Description:</label>
         <input type="text" class="form-control" id="Description" name="Description">
     </div>
+
     <div class="form-group">
-        <label for="Author">Author:</label>
-        <input type="text" class="form-control" id="Author" name="Author">
+        <label for="AuthorId">Author:</label>
+        <select class="form-control" id="AuthorId" name="AuthorId">
+            <option value="">-- Select Author --</option>
+            @foreach (var author in ViewBag.Authors)
+            {
+                <option value="@author.Id">@author.FirstName @author.LastName</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="GenreId">Genre:</label>
+        <select class="form-control" id="GenreId" name="GenreId">
+            @foreach (var genre in ViewBag.Genres)
+            {
+                <option value="@genre.Id">@genre.Name</option>
+            }
+        </select>
     </div>
     <div class="form-group">
-        <label for="Genre">Genre:</label>
-        <input type="text" class="form-control" id="Genre" name="Genre">
-    </div>
-    <div class="form-group">
-        <label for="image">ImageURL:</label>
-        <input type="text" class="form-control" id="image" name="image">
+        <label for="ImageUrl">ImageURL:</label>
+        <input type="text" class="form-control" id="ImageUrl" name="ImageUrl">
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
 

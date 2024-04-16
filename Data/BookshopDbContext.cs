@@ -63,6 +63,12 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Data
             modelBuilder.Entity<Book>()
            .Property(b => b.Price)
            .HasColumnType("decimal(18,2)");
+
+            modelBuilder.Entity<Book>()
+           .HasOne(b => b.Author)
+           .WithMany(a => a.Books)
+           .HasForeignKey(b => b.AuthorId);
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
