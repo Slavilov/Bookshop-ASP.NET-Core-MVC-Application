@@ -35,26 +35,6 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View();
         }
 
-        // GET: BooksController/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: BooksController/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
         [HttpGet]
         public IActionResult Create()
         {
@@ -62,40 +42,6 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             ViewBag.Genres = _context.Genres.ToList();
             return View();
         }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Title, Price, PublicationDate, Description, AuthorId, GenreId, ImageUrl")] Book book)
-        //{
-        //
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Fetch the corresponding Author object based on the AuthorId
-        //        book.Author = await _context.Authors.FindAsync(book.AuthorId);
-        //
-        //
-        //        _context.Add(book);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    //I was getting an ModelState.Isvalid = false, that's why i added this part!
-        //    if (!ModelState.IsValid)
-        //    {
-        //        book.Author = await _context.Authors.FindAsync(book.AuthorId);
-        //        Console.WriteLine(book.Author.FirstName);
-        //
-        //        foreach (var modelStateEntry in ModelState.Values)
-        //        {
-        //            foreach (var error in modelStateEntry.Errors)
-        //            {
-        //                Console.WriteLine(error.ErrorMessage);
-        //            }
-        //        }
-        //    }
-        //    ViewBag.Authors = _context.Authors.ToList();
-        //    ViewBag.Genres = _context.Genres.ToList();
-        //    return View(book);
-        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
