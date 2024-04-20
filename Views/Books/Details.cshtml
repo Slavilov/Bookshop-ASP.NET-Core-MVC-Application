@@ -1,0 +1,29 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="display-4">Book Details</h1>
+
+<div class="card border-primary mb-3" style="max-width: 50rem;">
+    <div class="card-header bg-primary text-white">
+        <h4>@Model.Title</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="card-text"><strong>Description:</strong> @Model.Description</p>
+                <p class="card-text"><strong>Price:</strong> @Model.Price.ToString("C")</p>
+                <p class="card-text"><strong>Publication Date:</strong> @Model.PublicationDate.ToString("MMMM dd, yyyy")</p>
+                <p class="card-text"><strong>Author:</strong> @(Model.Author != null ? Model.Author.FirstName + " " + Model.Author.LastName : "Unknown")</p>
+                <p class="card-text"><strong>Genres:</strong> @string.Join(", ", Model.BookGenres.Select(bg => bg.Genre.Name))</p>
+            </div>
+            <div class="col-md-6">
+                <img src="@Model.ImageUrl" class="img-fluid rounded" alt="Book Cover">
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-controller="Books" asp-action="Index" class="btn btn-primary mt-3">Back to List</a>

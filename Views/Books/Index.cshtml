@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<Book>
+
 @{
     ViewData["Title"] = "View";
-
 }
+
 <a asp-controller="Books" asp-action="Create" class="btn btn-primary">Add a Book!</a>
 
 <h1>Available Books:</h1>
@@ -30,9 +31,12 @@
                         </ul>
                     </li>
                 </ul>
+                <div class="card-footer">
+                    <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="btn btn-info">Details</a>
+                    <a asp-controller="Books" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger">Delete</a>
+                    <!-- Add buttons for Edit and Delete here -->
+                </div>
             </div>
         </div>
     }
 </div>
-
-
