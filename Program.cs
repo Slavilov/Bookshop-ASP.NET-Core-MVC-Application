@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using Bookshop.Data;
+using Bookshop_ASP.NET_Core_MVC_Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddDbContext<BookshopDbContext>(options => options.UseSqlServer());
 builder.Services.AddDbContext<BookshopDbContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<IBookService, BookService>();
 //DefaultConnectionString
 
 

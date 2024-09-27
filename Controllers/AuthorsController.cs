@@ -1,33 +1,34 @@
-﻿using Bookshop_ASP.NET_Core_MVC_Application.Data;
-using Bookshop_ASP.NET_Core_MVC_Application.Models;
+﻿using Bookshop_ASP.NET_Core_MVC_Application.Models;
+using Bookshop_ASP.NET_Core_MVC_Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
 {
     public class AuthorsController : Controller
     {
-        private readonly BookshopDbContext _context;
+        private readonly IAuthorService _authorService;
 
-        public AuthorsController(BookshopDbContext context)
+        public AuthorsController(IAuthorService authorService)
         {
-            _context = context;
+            _authorService = authorService;
         }
 
         // GET: Authors
         public async Task<IActionResult> Index()
         {
-            var authors = await _context.Authors.ToListAsync();
+            var authors = await _authorService.GetAllAuthorsAsync();
             return View(authors);
         }
 
         // GET: AuthorsController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
+            var author = await _authorService.GetAuthorByIdAsync(id);
+            if (author == null) return NotFound();
+            return View(author);
         }
-
 
         [HttpGet]
         public IActionResult Create()
@@ -42,53 +43,50 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(author);
-                await _context.SaveChangesAsync();
+                await _authorService.CreateAuthorAsync(author);
                 return RedirectToAction(nameof(Index));
             }
             return View(author);
         }
 
         // GET: AuthorsController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var author = await _authorService.GetAuthorByIdAsync(id);
+            if (author == null) return NotFound();
+            return View(author);
         }
 
         // POST: AuthorsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, FirstName, LastName, Description, Nationality, ImageUrl")] Author author)
         {
-            try
+            if (id != author.Id) return NotFound();
+
+            if (ModelState.IsValid)
             {
+                await _authorService.UpdateAuthorAsync(author);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(author);
         }
 
         // GET: AuthorsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            var author = await _authorService.GetAuthorByIdAsync(id);
+            if (author == null) return NotFound();
+            return View(author);
         }
 
         // POST: AuthorsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await _authorService.DeleteAuthorAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

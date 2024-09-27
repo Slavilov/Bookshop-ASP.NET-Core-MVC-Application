@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace Bookshop_ASP.NET_Core_MVC_Application.Models
 {
@@ -19,6 +20,8 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Models
         public ICollection<BookGenre> BookGenres { get; set; }
 
         public int AuthorId { get; set; }
+
+        [ValidateNever]
         public Author Author { get; set; }
     }
 }
