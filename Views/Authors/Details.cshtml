@@ -1,0 +1,44 @@
+﻿@model Author
+
+@{
+    ViewData["Title"] = "Author Details";
+}
+
+<h1 class="display-4">Author Details</h1>
+
+<div class="card border-primary mb-3" style="max-width: 50rem;">
+    <div class="card-header bg-primary text-white">
+        <h4>@Model.FirstName @Model.LastName</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="card-text"><strong>Description:</strong> @Model.Description</p>
+                <p class="card-text"><strong>Nationality:</strong> @Model.Nationality</p>
+                <p class="card-text"><strong>Genres:</strong> @string.Join(", ", Model.AuthorGenres.Select(ag => ag.Genre.Name))</p>
+            </div>
+            <div class="col-md-6">
+                <img src="@Model.ImageUrl" class="img-fluid rounded" alt="Author Photo">
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h4>Books by @Model.FirstName @Model.LastName:</h4>
+            <ul>
+                @if (Model.Books != null && Model.Books.Any())
+                {
+                    @foreach (var book in Model.Books)
+                    {
+                        <li>@book.Title</li>
+                    }
+                }
+                else
+                {
+                    <li>No books available for this author.</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<a asp-controller="Authors" asp-action="Index" class="btn btn-primary mt-3">Back to List</a>

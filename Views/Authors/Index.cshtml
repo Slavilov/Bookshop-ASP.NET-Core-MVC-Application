@@ -1,15 +1,18 @@
 ﻿@model IEnumerable<Author>
+
 @{
     ViewData["Title"] = "Index";
 }
+
 <a asp-controller="Authors" asp-action="Create" class="btn btn-primary">Add an Author!</a>
+
 <h1>Authors:</h1>
 <div class="row">
     @foreach (var author in Model)
     {
         <div class="col-md-4 col-lg-3 mb-4">
             <div class="card h-100">
-                <img src="@author.ImageUrl" alt="@author.FirstName @author.LastName" class="card-img-top book-card-img" style="max-height: 200px; object-fit: cover;">
+                <img src="@author.ImageUrl" alt="@author.FirstName @author.LastName" class="card-img-top" style="max-height: 200px; object-fit: cover;">
                 <div class="card-body">
                     <h5 class="card-title">@author.FirstName @author.LastName</h5>
                     <p class="card-text">@author.Description</p>
@@ -17,8 +20,11 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Nationality: @author.Nationality</li>
                 </ul>
+                <div class="card-footer">
+                    <a asp-controller="Authors" asp-action="Details" asp-route-id="@author.Id" class="btn btn-info">Details</a>
+                    <a asp-controller="Authors" asp-action="Delete" asp-route-id="@author.Id" class="btn btn-danger">Delete</a>
+                </div>
             </div>
         </div>
     }
-</div>
-
+    }

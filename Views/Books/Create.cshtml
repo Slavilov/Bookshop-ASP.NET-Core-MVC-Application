@@ -33,7 +33,7 @@
         </select>
     </div>
 
-    <div class="form-group">
+   @* <div class="form-group">
         <label for="GenreId">Genre:</label>
         <select class="form-control" id="GenreId" name="GenreId">
             @foreach (var genre in ViewBag.Genres)
@@ -41,6 +41,21 @@
                 <option value="@genre.Id">@genre.Name</option>
             }
         </select>
+        *@
+
+
+    <div class="form-group">
+        <label for="GenreIds">Genres:</label>
+        <select multiple class="form-control" id="GenreIds" name="GenreIds">
+            @foreach (var genre in ViewBag.Genres)
+            {
+                <option value="@genre.Id">@genre.Name</option>
+            }
+        </select>
+    </div>
+
+
+
     </div>
     <div class="form-group">
         <label for="ImageUrl">ImageURL:</label>
