@@ -10,6 +10,6 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Services
         Task<Author> GetAuthorByIdAsync(int id);
         Task CreateAuthorAsync(Author author);
         Task UpdateAuthorAsync(Author author);
-        Task DeleteAuthorAsync(int id);
+        Task<bool> DeleteAuthorAsync(int id); 
     }
 }

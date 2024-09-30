@@ -1,6 +1,5 @@
 ﻿using Bookshop_ASP.NET_Core_MVC_Application.Models;
 using Bookshop_ASP.NET_Core_MVC_Application.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -22,7 +21,7 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View(authors);
         }
 
-        // GET: AuthorsController/Details/5
+        // GET: Authors/Details/5
         public async Task<IActionResult> Details(int id)
         {
             var author = await _authorService.GetAuthorByIdAsync(id);
@@ -36,7 +35,7 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View();
         }
 
-        // POST: AuthorsController/Create
+        // POST: Authors/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FirstName, LastName, Description, Nationality, ImageUrl")] Author author)
@@ -49,7 +48,7 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View(author);
         }
 
-        // GET: AuthorsController/Edit/5
+        // GET: Authors/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var author = await _authorService.GetAuthorByIdAsync(id);
@@ -57,7 +56,7 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View(author);
         }
 
-        // POST: AuthorsController/Edit/5
+        // POST: Authors/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id, FirstName, LastName, Description, Nationality, ImageUrl")] Author author)
@@ -72,7 +71,7 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View(author);
         }
 
-        // GET: AuthorsController/Delete/5
+        // GET: Authors/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             var author = await _authorService.GetAuthorByIdAsync(id);
@@ -80,12 +79,14 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View(author);
         }
 
-        // POST: AuthorsController/Delete/5
+        // POST: Authors/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _authorService.DeleteAuthorAsync(id);
+            var success = await _authorService.DeleteAuthorAsync(id);
+            if (!success) return NotFound();
+
             return RedirectToAction(nameof(Index));
         }
     }

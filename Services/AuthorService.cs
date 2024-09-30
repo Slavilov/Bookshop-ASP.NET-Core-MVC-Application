@@ -33,18 +33,24 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Services
 
         public async Task UpdateAuthorAsync(Author author)
         {
-            _context.Update(author);
-            await _context.SaveChangesAsync();
+            var existingAuthor = await _context.Authors.FindAsync(author.Id);
+            if (existingAuthor != null)
+            {
+                _context.Update(author);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public async Task DeleteAuthorAsync(int id)
+        public async Task<bool> DeleteAuthorAsync(int id)
         {
             var author = await _context.Authors.FindAsync(id);
             if (author != null)
             {
                 _context.Authors.Remove(author);
                 await _context.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
     }
 }
