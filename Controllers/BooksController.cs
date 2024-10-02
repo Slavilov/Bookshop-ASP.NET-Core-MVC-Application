@@ -42,45 +42,6 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(Book book)
-        //{
-        //    Console.WriteLine("AuthorId: " + book.AuthorId);
-        //    Console.WriteLine("AuthorId: " + book.BookGenres);
-        //
-        //    // Manually find the author based on AuthorId and assign it
-        //    var author = (await _bookService.GetAuthorsAsync())
-        //                     .FirstOrDefault(a => a.Id == book.AuthorId);
-        //    book.Author = author;
-        //
-        //
-        //    if (!ModelState.IsValid)
-        //    {
-        //        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-        //        {
-        //            Console.WriteLine(error.ErrorMessage);
-        //        }
-        //    }
-        //
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (author != null)
-        //        {
-        //            await _bookService.CreateBookAsync(book);
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("AuthorId", "Invalid author selected.");
-        //        }
-        //    }
-        //
-        //    ViewBag.Authors = await _bookService.GetAuthorsAsync();
-        //    ViewBag.Genres = await _bookService.GetGenresAsync();
-        //    return View(book);
-        //}
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Book book, int[] GenreIds)

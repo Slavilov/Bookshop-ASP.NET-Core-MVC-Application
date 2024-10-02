@@ -34,6 +34,7 @@
                 <div class="card-footer">
                     <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="btn btn-info">Details</a>
                     <a asp-controller="Books" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger">Delete</a>
+                    <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-bookId="@book.Id" class="btn btn-primary">Buy</a>
                     <!-- Add buttons for Edit and Delete here -->
                 </div>
             </div>

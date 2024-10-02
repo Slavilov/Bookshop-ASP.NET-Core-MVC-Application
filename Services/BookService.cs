@@ -26,11 +26,50 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Services
 
         public async Task<Book> GetBookByIdAsync(int id)
         {
-            return await _context.Books
-                .Include(b => b.Author)
-                .Include(b => b.BookGenres)
-                    .ThenInclude(bg => bg.Genre)
-                .FirstOrDefaultAsync(b => b.Id == id);
+
+            try
+            {
+                var book = await _context.Books
+                    .Include(b => b.Author)
+                    .Include(b => b.BookGenres)
+                        .ThenInclude(bg => bg.Genre)
+                    .FirstOrDefaultAsync(b => b.Id == id);
+
+                if (book == null)
+                {
+                    Console.WriteLine($"No book found with ID: {id}");
+                }
+
+                return book;
+            }
+            catch (Exception ex)
+            {
+                // Log or throw the error to see if anything goes wrong during the query
+                Console.WriteLine($"Error fetching book: {ex.Message}");
+                return null;
+            }
+
+            //Console.WriteLine($"Attempting to fetch book with ID: {id}");
+            //
+            //var book = await _context.Books
+            //    .Include(b => b.Author)
+            //    .Include(b => b.BookGenres)
+            //        .ThenInclude(bg => bg.Genre)
+            //    .FirstOrDefaultAsync(b => b.Id == id);
+            //
+            //if (book == null)
+            //{
+            //    // Log or throw an error here
+            //    Console.WriteLine($"No book found with ID: {id}");
+            //}
+            //
+            //return book;
+
+            //return await _context.Books
+            //    .Include(b => b.Author)
+            //    .Include(b => b.BookGenres)
+            //        .ThenInclude(bg => bg.Genre)
+            //    .FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task CreateBookAsync(Book book)
