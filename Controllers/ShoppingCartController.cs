@@ -9,7 +9,6 @@ public class ShoppingCartController : Controller
         _shoppingCartService = shoppingCartService;
     }
 
-
     public IActionResult CheckSession()
     {
         var testValue = HttpContext.Session.GetString("Test");
@@ -49,3 +48,4 @@ public class ShoppingCartController : Controller
         return RedirectToAction("Index");
     }
 }
+

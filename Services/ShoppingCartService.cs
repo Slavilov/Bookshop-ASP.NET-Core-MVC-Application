@@ -9,14 +9,12 @@ public class ShoppingCartService : IShoppingCartService
 {
     private readonly IBookService _bookService;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly ISession _session;
     private const string CartSessionKey = "ShoppingCart";
 
     public ShoppingCartService(IBookService bookService, IHttpContextAccessor httpContextAccessor)
     {
         _bookService = bookService;
         _httpContextAccessor = httpContextAccessor;
-        //_session = _httpContextAccessor.HttpContext?.Session;
     }
 
     public async Task AddToCart(int bookId)
@@ -52,7 +50,12 @@ public class ShoppingCartService : IShoppingCartService
 
     public void ClearCart()
     {
-        _session.Remove(CartSessionKey);
+        var session = _httpContextAccessor.HttpContext?.Session;
+        if (session == null)
+        {
+            throw new InvalidOperationException("Session is not available.");
+        }
+        session.Remove(CartSessionKey);
     }
 
     public List<CartItem> GetCartItems()
@@ -65,20 +68,7 @@ public class ShoppingCartService : IShoppingCartService
         var shoppingCart = GetShoppingCart();
         return shoppingCart.Items.Sum(i => i.Book.Price * i.Quantity);
     }
-    //
-    //private ShoppingCart GetShoppingCart()
-    //{
-    //    var session = _httpContextAccessor.HttpContext.Session;
-    //    var cart = session.GetObjectFromJson<ShoppingCart>(CartSessionKey) ?? new ShoppingCart();
-    //    return cart;
-    //}
-    //
-    //private void SaveShoppingCart(ShoppingCart shoppingCart)
-    //{
-    //    var session = _httpContextAccessor.HttpContext.Session;
-    //    session.SetObjectAsJson(CartSessionKey, shoppingCart);
-    //}
-    //
+
     private ShoppingCart GetShoppingCart()
     {
         var session = _httpContextAccessor.HttpContext?.Session;
@@ -100,13 +90,21 @@ public class ShoppingCartService : IShoppingCartService
         {
             throw new InvalidOperationException("Session is not available.");
         }
+
+        // Serialize and store the cart
         session.SetObjectAsJson(CartSessionKey, shoppingCart);
 
-        //Check if session is being set and retrieved correctly
+        // DEBUG: Retrieve the cart immediately after saving to confirm it was saved
         var sessionCart = session.GetObjectFromJson<ShoppingCart>(CartSessionKey);
-        Console.WriteLine("Cart in session: " + JsonConvert.SerializeObject(sessionCart));
+
+        // Log the cart to the console
+        Console.WriteLine("Cart in session after Save: " + JsonConvert.SerializeObject(sessionCart));
+
+        if (sessionCart == null || sessionCart.Items.Count == 0)
+        {
+            Console.WriteLine("Error: Shopping cart was not saved properly.");
+        }
     }
-
-
 }
+
 
