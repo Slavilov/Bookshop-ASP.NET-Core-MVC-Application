@@ -1,9 +1,6 @@
 ﻿using Bookshop_ASP.NET_Core_MVC_Application.Services;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using SessionExtensions.Helpers;
 using System.Linq;
-using System.Threading.Tasks;
 
 public class ShoppingCartService : IShoppingCartService
 {
@@ -17,10 +14,10 @@ public class ShoppingCartService : IShoppingCartService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task AddToCart(int bookId)
+    public void AddToCart(int bookId)
     {
         var shoppingCart = GetShoppingCart();
-        var book = await _bookService.GetBookByIdAsync(bookId);
+        var book = _bookService.GetBookByIdAsync(bookId).Result;
         if (book == null) return;
 
         var cartItem = shoppingCart.Items.FirstOrDefault(i => i.BookId == bookId);
@@ -39,23 +36,13 @@ public class ShoppingCartService : IShoppingCartService
     public void RemoveFromCart(int bookId)
     {
         var shoppingCart = GetShoppingCart();
-        var cartItem = shoppingCart.Items.FirstOrDefault(i => i.BookId == bookId);
-        if (cartItem != null)
-        {
-            shoppingCart.Items.Remove(cartItem);
-        }
-
+        shoppingCart.Items.RemoveAll(i => i.BookId == bookId);
         SaveShoppingCart(shoppingCart);
     }
 
     public void ClearCart()
     {
-        var session = _httpContextAccessor.HttpContext?.Session;
-        if (session == null)
-        {
-            throw new InvalidOperationException("Session is not available.");
-        }
-        session.Remove(CartSessionKey);
+        _httpContextAccessor.HttpContext?.Session.Remove(CartSessionKey);
     }
 
     public List<CartItem> GetCartItems()
@@ -65,46 +52,17 @@ public class ShoppingCartService : IShoppingCartService
 
     public decimal GetCartTotal()
     {
-        var shoppingCart = GetShoppingCart();
-        return shoppingCart.Items.Sum(i => i.Book.Price * i.Quantity);
+        return GetShoppingCart().Items.Sum(i => i.Book.Price * i.Quantity);
     }
 
     private ShoppingCart GetShoppingCart()
     {
         var session = _httpContextAccessor.HttpContext?.Session;
-        if (session == null)
-        {
-            throw new InvalidOperationException("Session is not available.");
-        }
-        var cart = session.GetObjectFromJson<ShoppingCart>(CartSessionKey) ?? new ShoppingCart();
-
-        //Check if the session is retrieving the cart
-        Console.WriteLine("Cart retrieved from session: " + JsonConvert.SerializeObject(cart));
-        return cart;
+        return session?.GetObjectFromJson<ShoppingCart>(CartSessionKey) ?? new ShoppingCart();
     }
 
     private void SaveShoppingCart(ShoppingCart shoppingCart)
     {
-        var session = _httpContextAccessor.HttpContext?.Session;
-        if (session == null)
-        {
-            throw new InvalidOperationException("Session is not available.");
-        }
-
-        // Serialize and store the cart
-        session.SetObjectAsJson(CartSessionKey, shoppingCart);
-
-        // DEBUG: Retrieve the cart immediately after saving to confirm it was saved
-        var sessionCart = session.GetObjectFromJson<ShoppingCart>(CartSessionKey);
-
-        // Log the cart to the console
-        Console.WriteLine("Cart in session after Save: " + JsonConvert.SerializeObject(sessionCart));
-
-        if (sessionCart == null || sessionCart.Items.Count == 0)
-        {
-            Console.WriteLine("Error: Shopping cart was not saved properly.");
-        }
+        _httpContextAccessor.HttpContext?.Session.SetObjectAsJson(CartSessionKey, shoppingCart);
     }
 }
-
-

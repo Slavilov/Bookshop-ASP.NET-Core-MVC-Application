@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<CartItem>
+
+@{
     ViewData["Title"] = "Shopping Cart";
 }
 
@@ -14,7 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.Items)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>@item.Book.Title</td>
@@ -28,7 +30,7 @@
     </tbody>
 </table>
 
-<p><strong>Total: </strong>@ViewBag.TotalPrice</p>
+<p><strong>Total: </strong>@Model.Sum(item => item.Book.Price * item.Quantity)</p>
 
 <a href="@Url.Action("ClearCart", "ShoppingCart")" class="btn btn-warning">Clear Cart</a>
 <a href="#" class="btn btn-success">Checkout</a>

@@ -1,19 +1,30 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
-namespace SessionExtensions.Helpers
+public static class SessionExtensions
 {
-    public static class SessionExtensions
+    public static void SetObjectAsJson(this ISession session, string key, object value)
     {
-        public static void SetObjectAsJson(this ISession session, string key, object value)
+        var options = new JsonSerializerOptions
         {
-            session.SetString(key, JsonConvert.SerializeObject(value));
-        }
+            ReferenceHandler = ReferenceHandler.Preserve, // Handles circular references
+            WriteIndented = true // Optional: Makes JSON output more readable
+        };
+        session.SetString(key, JsonSerializer.Serialize(value, options));
+    }
 
-        public static T GetObjectFromJson<T>(this ISession session, string key)
+    public static T GetObjectFromJson<T>(this ISession session, string key)
+    {
+        var value = session.GetString(key);
+        if (value == null) return default;
+
+        var options = new JsonSerializerOptions
         {
-            var value = session.GetString(key);
-            return value == null ? default(T) : JsonConvert.DeserializeObject<T>(value);
-        }
+            ReferenceHandler = ReferenceHandler.Preserve, // Handles circular references
+            WriteIndented = true // Optional: consistent with serialization formatting
+        };
+
+        return JsonSerializer.Deserialize<T>(value, options);
     }
 }

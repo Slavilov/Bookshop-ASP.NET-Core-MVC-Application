@@ -9,43 +9,28 @@ public class ShoppingCartController : Controller
         _shoppingCartService = shoppingCartService;
     }
 
-    public IActionResult CheckSession()
-    {
-        var testValue = HttpContext.Session.GetString("Test");
-        if (string.IsNullOrEmpty(testValue))
-        {
-            HttpContext.Session.SetString("Test", "Session is working!");
-        }
-        return Content(HttpContext.Session.GetString("Test"));
-    }
-
     public IActionResult Index()
     {
         var items = _shoppingCartService.GetCartItems();
-        var total = _shoppingCartService.GetCartTotal();
-
-        ViewBag.Items = items;
-        ViewBag.TotalPrice = total;
-
-        return View();
+        ViewBag.TotalPrice = _shoppingCartService.GetCartTotal();
+        return View(items);
     }
 
     public IActionResult AddToCart(int bookId)
     {
         _shoppingCartService.AddToCart(bookId);
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult RemoveFromCart(int bookId)
     {
         _shoppingCartService.RemoveFromCart(bookId);
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult ClearCart()
     {
         _shoppingCartService.ClearCart();
-        return RedirectToAction("Index");
+        return RedirectToAction(nameof(Index));
     }
 }
-
