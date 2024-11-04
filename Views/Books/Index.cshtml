@@ -30,6 +30,7 @@
                             }
                         </ul>
                     </li>
+                    <li class="list-group-item">Rating: @book.AverageRating.ToString("0.0") / 5</li>
                 </ul>
                 <div class="card-footer">
                     <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="btn btn-info">Details</a>

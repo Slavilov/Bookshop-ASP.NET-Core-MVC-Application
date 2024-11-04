@@ -4,6 +4,7 @@ using Bookshop_ASP.NET_Core_MVC_Application.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookshop_ASP.NET_Core_MVC_Application.Migrations
 {
     [DbContext(typeof(BookshopDbContext))]
-    partial class BookshopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241104103809_AddBookRating")]
+    partial class AddBookRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,6 +98,12 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Migrations
                     b.Property<DateTime>("PublicationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("RatingCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RatingTotal")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -140,27 +149,6 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
-                });
-
-            modelBuilder.Entity("Bookshop_ASP.NET_Core_MVC_Application.Models.Rating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Bookshop_ASP.NET_Core_MVC_Application.Models.AuthorGenre", b =>
@@ -212,17 +200,6 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("Bookshop_ASP.NET_Core_MVC_Application.Models.Rating", b =>
-                {
-                    b.HasOne("Bookshop_ASP.NET_Core_MVC_Application.Models.Book", "Book")
-                        .WithMany("Ratings")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-                });
-
             modelBuilder.Entity("Bookshop_ASP.NET_Core_MVC_Application.Models.Author", b =>
                 {
                     b.Navigation("AuthorGenres");
@@ -233,8 +210,6 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Migrations
             modelBuilder.Entity("Bookshop_ASP.NET_Core_MVC_Application.Models.Book", b =>
                 {
                     b.Navigation("BookGenres");
-
-                    b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("Bookshop_ASP.NET_Core_MVC_Application.Models.Genre", b =>

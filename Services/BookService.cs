@@ -103,5 +103,27 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Services
         {
             return await _context.Genres.ToListAsync();
         }
+
+        public async Task AddRatingAsync(int bookId, int rating)
+        {
+            var book = await _context.Books
+                .Include(b => b.Ratings) // Make sure to include Ratings when fetching the book
+                .FirstOrDefaultAsync(b => b.Id == bookId); // Use FirstOrDefaultAsync for better readability
+
+            if (book != null && rating >= 1 && rating <= 5)
+            {
+                // Create a new Rating object
+                var newRating = new Rating
+                {
+                    Value = rating,
+                    BookId = bookId // Set the BookId for the rating
+                };
+
+                // Add the new rating to the book's ratings collection
+                book.Ratings.Add(newRating);
+
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

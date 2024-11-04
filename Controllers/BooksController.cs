@@ -149,5 +149,12 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Controllers
             await _bookService.DeleteBookAsync(id);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Rate(int bookId, int rating)
+        {
+            await _bookService.AddRatingAsync(bookId, rating);
+            return RedirectToAction("Details", new { id = bookId });
+        }
     }
 }

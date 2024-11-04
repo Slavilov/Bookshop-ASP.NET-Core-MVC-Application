@@ -13,5 +13,6 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Services
         Task DeleteBookAsync(int id);
         Task<List<Author>> GetAuthorsAsync();
         Task<List<Genre>> GetGenresAsync();
+        Task AddRatingAsync(int bookId, int rating);
     }
 }

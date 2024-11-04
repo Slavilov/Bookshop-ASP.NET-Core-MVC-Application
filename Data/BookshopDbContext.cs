@@ -28,6 +28,8 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Data
         public DbSet<AuthorGenre> AuthorGenres { get; set; }
         public DbSet<BookGenre> BookGenres { get; set; }
         // Add a DbSet Comment and Model Comment
+
+        public DbSet<Rating> Ratings { get; set; }
         // Add a DbSet Rating and Model Rating (min rating 1 - max rating 5)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -68,6 +70,14 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Data
            .HasOne(b => b.Author)
            .WithMany(a => a.Books)
            .HasForeignKey(b => b.AuthorId);
+
+            modelBuilder.Entity<Rating>()
+                .HasKey(r => r.Id);
+
+            modelBuilder.Entity<Rating>() // Configure Rating entity if needed
+               .HasOne(r => r.Book)
+               .WithMany(b => b.Ratings)
+               .HasForeignKey(r => r.BookId);
 
         }
 
