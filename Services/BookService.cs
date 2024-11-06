@@ -21,6 +21,7 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Services
                 .Include(b => b.Author)
                 .Include(b => b.BookGenres)
                     .ThenInclude(bg => bg.Genre)
+                .Include(b => b.Ratings)
                 .ToListAsync();
         }
 
@@ -33,6 +34,7 @@ namespace Bookshop_ASP.NET_Core_MVC_Application.Services
                     .Include(b => b.Author)
                     .Include(b => b.BookGenres)
                         .ThenInclude(bg => bg.Genre)
+                    .Include(b => b.Ratings)
                     .FirstOrDefaultAsync(b => b.Id == id);
 
                 if (book == null)
